@@ -21,11 +21,14 @@ type MaterialWithColor =
  * Type for materials that have uniforms property (shader materials)
  */
 type MaterialWithUniforms = THREE.ShaderMaterial
+type MaterialWithInternalId = THREE.Material & { id?: number }
 
 /**
  * @internal
  */
 export class AcTrMaterialUtil {
+  private static fallbackMaterialId = -1
+
   /**
    * Clone given material(s)
    */
@@ -43,6 +46,31 @@ export class AcTrMaterialUtil {
       return materials
     }
     return (material as THREE.Material).clone()
+  }
+
+  /**
+   * Returns a stable numeric material id.
+   *
+   * Newer three typings no longer expose `material.id` publicly, while runtime
+   * may still provide it. We prefer that runtime id; otherwise we assign one
+   * deterministic fallback id on `userData`.
+   */
+  public static getMaterialId(material: THREE.Material): number {
+    const internalId = (material as MaterialWithInternalId).id
+    if (typeof internalId === 'number') {
+      return internalId
+    }
+
+    const key = '__mlightcadMaterialId'
+    const userData = material.userData as Record<string, unknown>
+    const cached = userData[key]
+    if (typeof cached === 'number') {
+      return cached
+    }
+
+    const generated = AcTrMaterialUtil.fallbackMaterialId--
+    userData[key] = generated
+    return generated
   }
 
   public static setMaterialColor(

@@ -15,25 +15,25 @@ This is an example application that demonstrates how to use the `@mlightcad/cad-
 
 ```bash
 # Install dependencies
-pnpm install
+bun install
 
 # Start development server
-pnpm dev
+bun run dev
 
 # Build for production
-pnpm build
+bun run build
 
 # Preview production build
-pnpm preview
+bun run preview
 
 # Analyze bundle size
-pnpm analyze
+bun run analyze
 
 # Lint code
-pnpm lint
+bun run lint
 
 # Fix linting issues
-pnpm lint:fix
+bun run lint:fix
 ```
 
 ## Usage

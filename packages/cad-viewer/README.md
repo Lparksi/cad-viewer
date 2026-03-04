@@ -364,16 +364,16 @@ Please refer to [readme of cad-simple-viewer](../cad-simple-viewer/README.md) to
 
 ```bash
 # Install dependencies
-pnpm install
+bun install
 
 # Start development server
-pnpm dev
+bun run dev
 
 # Build the library
-pnpm build
+bun run build
 
 # Preview the build
-pnpm preview
+bun run preview
 ```
 
 ## License

@@ -44,7 +44,7 @@ A minimal, lightweight CAD viewer focusing on core functionality.
 
 ### Prerequisites
 
-Make sure you have Node.js and pnpm installed. This project is part of a monorepo workspace.
+Make sure you have Node.js and Bun installed. This project is part of a monorepo workspace.
 
 ### Installation and Setup
 
@@ -52,19 +52,19 @@ From the project root:
 
 ```bash
 # Install all dependencies
-pnpm install
+bun install
 
 # Build all examples
-pnpm build
+bun run build
 
 # Navigate to the examples directory
 cd packages/examples
 
 # Copy built examples to public directory
-pnpm pre-serve
+bun run pre-serve
 
 # Serve the examples
-pnpm serve
+bun run serve
 ```
 
 The examples will be available at:
@@ -78,18 +78,18 @@ The examples will be available at:
 
 ```bash
 # Build all examples from the root
-pnpm build
+bun run build
 
 # Or build individual examples
-cd packages/cad-viewer-example && pnpm build
-cd packages/cad-simple-viewer-example && pnpm build
+cd packages/cad-viewer-example && bun run build
+cd packages/cad-simple-viewer-example && bun run build
 ```
 
 ### Updating Examples
 
 1. Make changes to the individual example packages
 2. Build the updated examples
-3. Run `pnpm pre-serve` to copy the new builds
+3. Run `bun run pre-serve` to copy the new builds
 4. The changes will be reflected when serving
 
 ### File Structure

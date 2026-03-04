@@ -39,7 +39,7 @@
     "lint:fix": "eslint --fix --quiet src/"
   },
   "devDependencies": {
-    "@types/three": "^0.172.0"
+    "@types/three": "^0.183.1"
   },
   "peerDependencies": {
     "@mlightcad/data-model": "^1.7.3",

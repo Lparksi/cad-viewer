@@ -2,6 +2,7 @@ import { AcGiSubEntityTraits, deepClone } from '@mlightcad/data-model'
 import * as THREE from 'three'
 
 import { AcTrStyleManagerOptions } from './AcTrStyleManagerOptions'
+import { AcTrMaterialUtil } from '../util'
 
 /**
  * Base class for all material managers (line, fill, point).
@@ -93,7 +94,7 @@ export abstract class AcTrMaterialManager<T> {
       // Step 2: build new key
       const newKey = this.buildKey(mergedTraits, mergedTraits)
 
-      const oldMaterialId = oldMaterial.id
+      const oldMaterialId = AcTrMaterialUtil.getMaterialId(oldMaterial)
 
       // Step 3: dispose old
       oldMaterial.dispose()

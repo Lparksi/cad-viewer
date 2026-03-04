@@ -302,12 +302,13 @@ export class AcTrBatchedGroup extends THREE.Group {
    * @param material - The new material associated with the batch object
    */
   updateMaterial(oldId: number, material: THREE.Material) {
+    const newMaterialId = this.getMaterialId(material)
     this.groups.forEach(group => {
       const batch = group.get(oldId)
       if (batch) {
         batch.material = material
         // @ts-expect-error batch is from group and it must be type-safe.
-        group.set(material.id, batch)
+        group.set(newMaterialId, batch)
       }
     })
     this._unbatchedObjects.traverse(object => {
@@ -315,7 +316,7 @@ export class AcTrBatchedGroup extends THREE.Group {
       const userDataMaterialId = object.userData.styleMaterialId as number
       if (userDataMaterialId === oldId) {
         object.material = material
-        object.userData.styleMaterialId = material.id
+        object.userData.styleMaterialId = newMaterialId
       }
     })
   }
@@ -567,15 +568,16 @@ export class AcTrBatchedGroup extends THREE.Group {
     userData: AcTrBatchGeometryUserData
   ): AcTrEntityInBatchedObject {
     const material = object.material as THREE.Material
+    const materialId = this.getMaterialId(material)
     const batches = this.getMatchedLineBatches(object)
-    let batchedLine = batches.get(material.id)
+    let batchedLine = batches.get(materialId)
     if (batchedLine == null) {
       batchedLine = new AcTrBatchedLine(
         AcTrBatchedGroup.INITIAL_LINE_VERTEX_CAPACITY,
         AcTrBatchedGroup.INITIAL_LINE_INDEX_CAPACITY,
         material
       )
-      batches.set(material.id, batchedLine)
+      batches.set(materialId, batchedLine)
       this.add(batchedLine)
     }
     object.geometry.applyMatrix4(object.matrixWorld)
@@ -596,13 +598,14 @@ export class AcTrBatchedGroup extends THREE.Group {
     userData: AcTrBatchGeometryUserData
   ): AcTrEntityInBatchedObject {
     const material = object.material as THREE.Material
-    let batchedLine = this._line2Batches.get(material.id)
+    const materialId = this.getMaterialId(material)
+    let batchedLine = this._line2Batches.get(materialId)
     if (batchedLine == null) {
       batchedLine = new AcTrBatchedLine2(
         AcTrBatchedGroup.INITIAL_LINE_VERTEX_CAPACITY,
         material
       )
-      this._line2Batches.set(material.id, batchedLine)
+      this._line2Batches.set(materialId, batchedLine)
       this.add(batchedLine)
     }
 
@@ -625,16 +628,17 @@ export class AcTrBatchedGroup extends THREE.Group {
     userData: AcTrBatchGeometryUserData
   ): AcTrEntityInBatchedObject {
     const material = object.material as THREE.Material
+    const materialId = this.getMaterialId(material)
 
     const batches = this.getMatchedMeshBatches(object)
-    let batchedMesh = batches.get(material.id)
+    let batchedMesh = batches.get(materialId)
     if (batchedMesh == null) {
       batchedMesh = new AcTrBatchedMesh(
         AcTrBatchedGroup.INITIAL_MESH_VERTEX_CAPACITY,
         AcTrBatchedGroup.INITIAL_MESH_INDEX_CAPACITY,
         material
       )
-      batches.set(material.id, batchedMesh)
+      batches.set(materialId, batchedMesh)
       this.add(batchedMesh)
     }
     object.geometry.applyMatrix4(object.matrixWorld)
@@ -655,14 +659,15 @@ export class AcTrBatchedGroup extends THREE.Group {
     userData: AcTrBatchGeometryUserData
   ): AcTrEntityInBatchedObject {
     const material = object.material as THREE.Material
-    let batchedPoint = this._pointBatches.get(material.id)
+    const materialId = this.getMaterialId(material)
+    let batchedPoint = this._pointBatches.get(materialId)
     if (batchedPoint == null) {
       batchedPoint = new AcTrBatchedPoint(
         AcTrBatchedGroup.INITIAL_POINT_VERTEX_CAPACITY,
         material
       )
       batchedPoint.visible = object.visible
-      this._pointBatches.set(material.id, batchedPoint)
+      this._pointBatches.set(materialId, batchedPoint)
       this.add(batchedPoint)
     }
     object.geometry.applyMatrix4(object.matrixWorld)
@@ -948,9 +953,9 @@ export class AcTrBatchedGroup extends THREE.Group {
    */
   private getMaterialId(material: THREE.Material | THREE.Material[]) {
     if (Array.isArray(material)) {
-      return material[0]?.id ?? -1
+      return material[0] ? AcTrMaterialUtil.getMaterialId(material[0]) : -1
     }
-    return material.id
+    return AcTrMaterialUtil.getMaterialId(material)
   }
 }
 

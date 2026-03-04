@@ -16,7 +16,7 @@ A minimal web application demonstrating how to use the `@mlightcad/cad-simple-vi
 
 ### Prerequisites
 
-Make sure you have Node.js and pnpm installed. This project is part of a monorepo workspace.
+Make sure you have Node.js and Bun installed. This project is part of a monorepo workspace.
 
 ### Installation
 
@@ -24,13 +24,13 @@ From the project root:
 
 ```bash
 # Install dependencies
-pnpm install
+bun install
 
 # Navigate to the example directory
 cd packages/cad-simple-viewer-example
 
 # Start the development server
-pnpm dev
+bun run dev
 ```
 
 The application will be available at `http://localhost:3000`.
@@ -38,8 +38,8 @@ The application will be available at `http://localhost:3000`.
 ### Building for Production
 
 ```bash
-pnpm build
-pnpm preview
+bun run build
+bun run preview
 ```
 
 ## Usage
@@ -98,22 +98,22 @@ This example demonstrates:
 
 ```bash
 # Development
-pnpm dev
+bun run dev
 
 # Build for production
-pnpm build
+bun run build
 
 # Preview production build
-pnpm preview
+bun run preview
 
 # Clean build artifacts
-pnpm clean
+bun run clean
 
 # Lint code
-pnpm lint
+bun run lint
 
 # Fix linting issues
-pnpm lint:fix
+bun run lint:fix
 ```
 
 ## Notes

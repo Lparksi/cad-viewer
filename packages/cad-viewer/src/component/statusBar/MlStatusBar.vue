@@ -1,6 +1,7 @@
 <template>
   <ml-status-bar class="ml-status-bar">
     <!-- Left Slot Content -->
+    <!-- @vue-ignore -->
     <template #left>
       <el-button-group class="ml-status-bar-left-button-group">
         <el-button
@@ -16,6 +17,7 @@
     </template>
 
     <!-- Right Slot Content -->
+    <!-- @vue-ignore -->
     <template #right>
       <ml-progress />
       <el-button-group class="ml-status-bar-right-button-group">

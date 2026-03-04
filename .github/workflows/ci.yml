@@ -23,34 +23,34 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: 9
+          bun-version: 1.3.8
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Lint code
-        run: pnpm lint
+        run: bun run lint
 
       - name: Build projects
         run: |
           export NODE_OPTIONS="--max-old-space-size=4096"
-          pnpm run build
+          bun run build
 
       - name: Run tests
-        run: pnpm test
+        run: bun run test
 
       - name: Build docs
-        run: pnpm doc
+        run: bun run doc
 
       - name: Pre-serve
-        run: pnpm pre-serve
+        run: bun run pre-serve
 
       - name: Create github release
         if: startsWith(github.ref, 'refs/tags/')

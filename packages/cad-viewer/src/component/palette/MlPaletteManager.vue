@@ -7,11 +7,13 @@
       :tabs="tabs"
       :bottom-offset="30"
     >
+      <!-- @vue-ignore -->
       <template #tab-layerManager>
         <div class="ml-layer-list-wrapper">
           <ml-layer-list :editor="props.editor" />
         </div>
       </template>
+      <!-- @vue-ignore -->
       <template #tab-entityProperties>
         <ml-entity-properties :entity-props-list="properties" />
       </template>

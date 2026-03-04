@@ -209,14 +209,21 @@ const { isShowToolbar } = useEntityDrawStyle(editor)
  * @param fileName - Name of the uploaded file
  * @param fileContent - File content as string (DXF) or ArrayBuffer (DWG)
  */
-const handleFileRead = async (fileName: string, fileContent: ArrayBuffer) => {
+const handleFileRead = async (
+  fileName: string,
+  fileContent: string | ArrayBuffer
+) => {
+  const normalizedContent =
+    typeof fileContent === 'string'
+      ? new TextEncoder().encode(fileContent).buffer
+      : fileContent
   const options: AcApOpenDatabaseOptions = {
     minimumChunkSize: 1000,
     mode: props.mode
   }
   const success = await AcApDocManager.instance.openDocument(
     fileName,
-    fileContent,
+    normalizedContent,
     options
   )
   if (!success) {
