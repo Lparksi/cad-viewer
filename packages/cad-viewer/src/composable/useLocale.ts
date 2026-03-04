@@ -7,19 +7,18 @@ import { useI18n } from 'vue-i18n'
 import { i18n, LocaleProp } from '../locale'
 
 const STORAGE_KEY = 'preferred_lang'
+const DEFAULT_LOCALE: AcApLocale = 'zh'
 
 export function useLocale(propLocale?: LocaleProp) {
   const { locale: i18nLocale } = useI18n()
 
-  // Get initial locale from localStorage or browser preference
+  // Get initial locale from localStorage, otherwise use project default.
   const getInitialLocale = (): AcApLocale => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'en' || stored === 'zh') return stored
 
-    const browserLang = navigator.language.toLowerCase()
-    const browserLocale = browserLang.substring(0, 2) === 'zh' ? 'zh' : 'en'
-    AcApI18n.setCurrentLocale(browserLocale)
-    return browserLocale
+    AcApI18n.setCurrentLocale(DEFAULT_LOCALE)
+    return DEFAULT_LOCALE
   }
 
   // Current effective locale

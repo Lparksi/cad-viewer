@@ -8,7 +8,7 @@
     <!-- CAD viewer when file is selected -->
     <div v-else>
       <MlCadViewer
-        locale="en"
+        locale="default"
         :local-file="store.selectedFile"
         :mode="selectedMode"
         @create="initialize"

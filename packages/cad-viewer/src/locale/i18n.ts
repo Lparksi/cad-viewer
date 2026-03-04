@@ -11,14 +11,14 @@ import zhDialog from './zh/dialog'
 import zhEnity from './zh/entity'
 import zhMain from './zh/main'
 
-// Get language of browser - use same logic as useLocale
+const DEFAULT_LOCALE = 'zh'
+
+// Get initial locale from persisted user preference
 const getInitialLocale = (): string => {
   const stored = localStorage.getItem('preferred_lang')
   if (stored === 'en' || stored === 'zh') return stored
 
-  const browserLang = navigator.language.toLowerCase()
-  const browserLocale = browserLang.substring(0, 2)
-  return browserLocale === 'zh' ? 'zh' : 'en'
+  return DEFAULT_LOCALE
 }
 
 const messages = {
