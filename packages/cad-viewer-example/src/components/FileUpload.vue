@@ -16,7 +16,14 @@
         <p class="upload-description">
           Drop file here or <em>click to select</em>
         </p>
-        <div>
+        <div
+          class="mode-selector-panel"
+          @click.stop
+          @mousedown.stop
+          @mouseup.stop
+          @touchstart.stop
+          @touchend.stop
+        >
           <el-radio-group v-model="selectedMode" class="mode-radio-group">
             <el-radio :label="0" border>Read</el-radio>
             <el-radio :label="4" border>Review</el-radio>
@@ -165,6 +172,11 @@ const isValidFile = (file: File): boolean => {
   gap: 12px;
   margin-bottom: 16px;
   flex-wrap: wrap;
+}
+
+.mode-selector-panel {
+  position: relative;
+  z-index: 2;
 }
 
 .mode-radio-group :deep(.el-radio) {
